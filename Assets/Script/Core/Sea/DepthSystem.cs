@@ -10,7 +10,10 @@ public class DepthSystem : MonoBehaviour
 
     private Vector3 startPosition;
 
+    private bool overrideDepth;
+
     public float CurrentDepth { get; private set; }
+    public Vector3 StartPosition => startPosition;
 
     private void Start()
     {
@@ -20,7 +23,6 @@ public class DepthSystem : MonoBehaviour
             return;
         }
 
-        // Menyimpan posisi awal SeaHook
         startPosition = seaHook.position;
     }
 
@@ -29,21 +31,43 @@ public class DepthSystem : MonoBehaviour
         if (seaHook == null)
             return;
 
+        if (overrideDepth)
+            return;
+
         CalculateDepth();
     }
 
     private void CalculateDepth()
     {
-        // Hanya menghitung jarak pada bidang horizontal
-        Vector3 currentPosition = seaHook.position;
-
         float distance = Vector3.Distance(
             startPosition,
-            currentPosition
+            seaHook.position
         );
 
-        CurrentDepth = Mathf.Clamp(distance, 0f, maxDepth);
+        CurrentDepth = Mathf.Clamp(
+            distance,
+            0f,
+            maxDepth
+        );
+    }
 
-        // Debug.Log("Depth: " + CurrentDepth.ToString("F1") + " m");
+    public void SetDepthOverride(float depth)
+    {
+        overrideDepth = true;
+
+        CurrentDepth = Mathf.Clamp(
+            depth,
+            0f,
+            maxDepth
+        );
+    }
+
+    public void ResumeFromCurrentPosition()
+    {
+        startPosition = seaHook.position;
+
+        CurrentDepth = 0f;
+
+        overrideDepth = false;
     }
 }

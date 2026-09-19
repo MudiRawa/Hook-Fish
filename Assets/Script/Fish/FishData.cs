@@ -27,6 +27,7 @@ public class FishData : ScriptableObject
     [Header("Rarity")]
     public FishRarity rarity;
 
-    [Header("Fishing")]
+    [Header("Fight")]
+    [Range(1f, 100f)]
     public float fightStrength = 1f;
 }

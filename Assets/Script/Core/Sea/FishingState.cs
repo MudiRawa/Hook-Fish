@@ -6,13 +6,16 @@ public class FishingState : MonoBehaviour
 
     public FishData CurrentFish { get; private set; }
 
-    public void StartFishing(FishData fish)
+    public Transform CurrentFishObject { get; private set; }
+
+    public void StartFishing(FishData fish, Transform fishObject)
     {
         if (IsFishing)
             return;
 
         IsFishing = true;
         CurrentFish = fish;
+        CurrentFishObject = fishObject;
 
         Debug.Log("Ikan menyambar: " + fish.fishName);
     }
@@ -21,5 +24,6 @@ public class FishingState : MonoBehaviour
     {
         IsFishing = false;
         CurrentFish = null;
+        CurrentFishObject = null;
     }
 }

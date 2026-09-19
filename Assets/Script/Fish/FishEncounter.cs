@@ -17,6 +17,9 @@ public class FishEncounter : MonoBehaviour
             return;
         }
 
-        fishingState.StartFishing(fishData);
+        fishingState.StartFishing(
+            fishData,
+            transform
+        );
     }
 }

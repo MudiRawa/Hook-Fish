@@ -6,6 +6,7 @@ public class SeaHookMovement : MonoBehaviour
     [Header("Movement")]
     public float moveSpeed = 3.5f;
     public float idleForwardSpeed = 0.5f;
+    public float verticalMultiplier = 1f;
 
     [Header("Fishing")]
     public FishingState fishingState;
@@ -23,13 +24,18 @@ public class SeaHookMovement : MonoBehaviour
         if (fishingState != null && fishingState.IsFishing)
             return;
 
-        Vector3 movement = Vector3.forward * idleForwardSpeed;
+        // Kecepatan maju/mundur
+        float forwardSpeed =
+            idleForwardSpeed + (moveInput.y * moveSpeed);
 
-        movement += new Vector3(
-            moveInput.x,
-            0f,
-            moveInput.y
-        ) * moveSpeed;
+        // Gerakan kiri/kanan
+        float horizontalSpeed = moveInput.x * moveSpeed;
+
+        Vector3 movement = new Vector3(
+            horizontalSpeed,
+            -forwardSpeed * verticalMultiplier,
+            forwardSpeed
+        );
 
         transform.position += movement * Time.deltaTime;
     }
