@@ -841,6 +841,9 @@ public class FishingMinigame : MonoBehaviour
 
         fishingStatusText.text = "FISH CAUGHT!";
 
+        // Simpan ikan yang berhasil ditangkap
+        fishingState.CatchFish();
+
         depthSystem.SetDepthOverride(0f);
 
         // Kembali tepat ke posisi awal.
@@ -854,12 +857,14 @@ public class FishingMinigame : MonoBehaviour
         }
 
         fishingState.EndFishing();
+
         depthSystem.ResumeFromCurrentPosition();
         fishingPanel.SetActive(false);
 
         minigameStarted = false;
         fightStarted = false;
         finishing = false;
+
         SceneManager.LoadScene("Dock");
     }
 }

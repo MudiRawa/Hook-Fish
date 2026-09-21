@@ -14,6 +14,6 @@ MonoBehaviour:
   m_EditorClassIdentifier: Assembly-CSharp::FishData
   fishName: Parrot Fish
   description: Parrot Fish
-  fishPrefab: {fileID: 0}
+  fishPrefab: {fileID: 3821462079908814525, guid: 5bfba5b00b9361a4ebd659236b6e2562, type: 3}
   rarity: 0
-  fightStrength: 52
+  fightStrength: 10
