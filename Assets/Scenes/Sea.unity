@@ -599,6 +599,7 @@ MonoBehaviour:
   idleForwardSpeed: 0.25
   verticalMultiplier: 0.75
   fishingState: {fileID: 776932500}
+  depthSystem: {fileID: 776932499}
 --- !u!114 &107113641
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -3045,7 +3046,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 1
+  m_IsActive: 0
 --- !u!224 &2027700071
 RectTransform:
   m_ObjectHideFlags: 0

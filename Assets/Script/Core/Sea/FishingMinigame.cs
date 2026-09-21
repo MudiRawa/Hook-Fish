@@ -1,6 +1,7 @@
 using System.Collections;
 using UnityEngine;
 using UnityEngine.InputSystem;
+using UnityEngine.SceneManagement;
 
 public class FishingMinigame : MonoBehaviour
 {
@@ -37,11 +38,8 @@ public class FishingMinigame : MonoBehaviour
 
     private float catchZoneX;
     private float catchZoneVelocity;
-
     private float fishMarkerX;
-
     private float fishStateTimer;
-
     private float startingDepth;
     private float fightDepth;
 
@@ -51,6 +49,7 @@ public class FishingMinigame : MonoBehaviour
     private bool minigameStarted;
     private bool fightStarted;
     private bool finishing;
+    private bool maxDepthReached;
 
     private enum FishMotionState
     {
@@ -63,12 +62,12 @@ public class FishingMinigame : MonoBehaviour
 
     private float fishVelocity;
     private float fishVelocitySmooth;
-
     private float fishDirection;
 
     private void Start()
     {
         fishingPanel.SetActive(false);
+        maxDepthReached = false;
     }
 
     private void Update()
@@ -589,16 +588,9 @@ public class FishingMinigame : MonoBehaviour
     {
         // Burst selalu punya kemungkinan
         // berganti arah.
-        fishDirection =
-            Random.value > 0.5f
-                ? 1f
-                : -1f;
-
-        fishMotionState =
-            FishMotionState.Bursting;
-
-        fishStateTimer =
-            GetBurstDuration();
+        fishDirection = Random.value > 0.5f ? 1f : -1f;
+        fishMotionState = FishMotionState.Bursting;
+        fishStateTimer = GetBurstDuration();
     }
 
     // =========================================================
@@ -744,14 +736,14 @@ public class FishingMinigame : MonoBehaviour
 
         if (fishInsideZone)
         {
-            // Tetap 1 m/s.
+            // Menarik kail ke atas dengan kecepatan 1
             fightDepth -=
                 pullDepthSpeed *
                 Time.deltaTime;
         }
         else
         {
-            // Tetap 1 m/s.
+            // Ikan menarik kail ke bawah dengan kecepatan 1
             fightDepth +=
                 escapeDepthSpeed *
                 Time.deltaTime;
@@ -763,6 +755,23 @@ public class FishingMinigame : MonoBehaviour
                 0f,
                 depthSystem.maxDepth
             );
+
+        // Cek apakah sudah mencapai batas maksimal
+        if (fightDepth >= depthSystem.maxDepth && !maxDepthReached)
+        {
+            maxDepthReached = true;
+            Debug.Log("Kalah mancing");
+            SceneManager.LoadScene("Dock");
+        }
+
+        // Kalau sudah tidak berada di max depth,
+        // izinkan log muncul lagi kalau nanti mencapai batas lagi.
+        if (
+            fightDepth < depthSystem.maxDepth
+        )
+        {
+            maxDepthReached = false;
+        }
 
         depthSystem.SetDepthOverride(
             fightDepth
@@ -807,19 +816,15 @@ public class FishingMinigame : MonoBehaviour
         if (startingDepth <= 0f)
             return;
 
-        float progress =
-            fightDepth /
-            startingDepth;
+        float progress = fightDepth / startingDepth;
 
-        Vector3 newPosition =
-            Vector3.LerpUnclamped(
+        Vector3 newPosition = Vector3.LerpUnclamped(
                 originalStartPosition,
                 fightStartPosition,
                 progress
             );
 
-        seaHook.position =
-            newPosition;
+        seaHook.position = newPosition;
     }
 
     // =========================================================
@@ -834,37 +839,27 @@ public class FishingMinigame : MonoBehaviour
         finishing = true;
         fightStarted = false;
 
-        fishingStatusText.text =
-            "FISH CAUGHT!";
+        fishingStatusText.text = "FISH CAUGHT!";
 
         depthSystem.SetDepthOverride(0f);
 
         // Kembali tepat ke posisi awal.
-        seaHook.position =
-            originalStartPosition;
+        seaHook.position = originalStartPosition;
 
-        yield return new WaitForSeconds(
-            successMessageTime
-        );
+        yield return new WaitForSeconds(successMessageTime);
 
-        if (
-            fishingState.CurrentFishObject
-            != null
-        )
+        if (fishingState.CurrentFishObject != null)
         {
-            Destroy(
-                fishingState.CurrentFishObject.gameObject
-            );
+            Destroy(fishingState.CurrentFishObject.gameObject);
         }
 
         fishingState.EndFishing();
-
         depthSystem.ResumeFromCurrentPosition();
-
         fishingPanel.SetActive(false);
 
         minigameStarted = false;
         fightStarted = false;
         finishing = false;
+        SceneManager.LoadScene("Dock");
     }
 }
