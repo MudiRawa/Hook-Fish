@@ -13,6 +13,7 @@ GameObject:
   - component: {fileID: 574628421038404725}
   - component: {fileID: 6473517986874907264}
   - component: {fileID: 6493813172774439494}
+  - component: {fileID: 3290016497302442639}
   m_Layer: 0
   m_Name: Ikan (ceritanya)
   m_TagString: Fish
@@ -126,3 +127,24 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::FishEncounter
   fishData: {fileID: 11400000, guid: 98cc36646a0f0b5408c18418f67781d1, type: 2}
+--- !u!114 &3290016497302442639
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 3821462079908814525}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: e9f3acc64092e244c8e381a5cc9bdedb, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Assembly-CSharp::FishMovement
+  edgeMargin: 1.5
+  minSpeed: 0.8
+  maxSpeed: 1.8
+  speedChangeRate: 0.8
+  turnSpeed: 2.5
+  directionChangeMin: 1.5
+  directionChangeMax: 3.5
+  minVisualScale: 0.1
+  maxVisualScale: 2

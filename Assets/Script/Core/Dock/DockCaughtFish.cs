@@ -29,7 +29,7 @@ public class DockCaughtFish : MonoBehaviour
         if (caughtFish.fishPrefab == null)
         {
             Debug.LogWarning(
-                "fishPrefab untuk " +
+                "FishPrefab untuk " +
                 caughtFish.fishName +
                 " belum diisi."
             );
@@ -37,14 +37,46 @@ public class DockCaughtFish : MonoBehaviour
             return;
         }
 
+        // Spawn ikan di tangan
         currentFishObject =
             Instantiate(
                 caughtFish.fishPrefab,
                 fishHoldPoint
             );
 
-        currentFishObject.transform.localPosition = Vector3.zero;
-        currentFishObject.transform.localRotation = Quaternion.Euler(-70, 0, 0);
-        Debug.Log("Menampilkan ikan di Dock: " + caughtFish.fishName);
+        currentFishObject.transform.localPosition =
+            Vector3.zero;
+
+        currentFishObject.transform.localRotation =
+            Quaternion.Euler(-70f, 0f, 0f);
+
+        // =====================================================
+        // PAKAI UKURAN IKAN YANG SAMA DENGAN HASIL TANGKAPAN
+        // =====================================================
+
+        float sizeMultiplier =
+            FishingState.LastCaughtFishSize;
+
+        currentFishObject.transform.localScale =
+            caughtFish.fishPrefab.transform.localScale *
+            sizeMultiplier;
+
+        Debug.Log(
+            "Menampilkan ikan di Dock: " +
+            caughtFish.fishName +
+            " | Size: " +
+            sizeMultiplier.ToString("F2") +
+            "x"
+        );
+    }
+
+    public void ClearHeldFish()
+    {
+        if (currentFishObject != null)
+        {
+            Destroy(currentFishObject);
+
+            currentFishObject = null;
+        }
     }
 }

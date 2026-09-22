@@ -4,30 +4,61 @@ public class FishingState : MonoBehaviour
 {
     public bool IsFishing { get; private set; }
 
-    // Ikan yang sedang dipancing
     public FishData CurrentFish { get; private set; }
 
-    // Object ikan yang sedang menempel di kail
     public Transform CurrentFishObject { get; private set; }
 
+    // Ukuran aktual ikan yang sedang dipancing
+    public float CurrentFishSize { get; private set; }
+
     // Ikan terakhir yang berhasil ditangkap
-    // Tetap tersimpan walaupun pindah scene
     public static FishData LastCaughtFish { get; private set; }
 
-    public void StartFishing(FishData fish, Transform fishObject)
+    // Ukuran aktual ikan terakhir
+    public static float LastCaughtFishSize { get; private set; }
+
+    public void StartFishing(
+        FishData fish,
+        Transform fishObject
+    )
     {
         if (IsFishing)
             return;
 
         IsFishing = true;
+
         CurrentFish = fish;
         CurrentFishObject = fishObject;
 
-        // Hapus hasil tangkapan sebelumnya karena sekarang
-        // sedang memulai tangkapan baru
-        LastCaughtFish = null;
+        // Ambil ukuran aktual dari ikan yang di-spawn
+        FishMovement fishMovement =
+            fishObject.GetComponent<FishMovement>();
 
-        Debug.Log("Ikan menyambar: " + fish.fishName);
+        if (fishMovement != null)
+        {
+            CurrentFishSize =
+                fishMovement.currentSizeMultiplier;
+        }
+        else
+        {
+            CurrentFishSize = 1f;
+
+            Debug.LogWarning(
+                "FishMovement tidak ditemukan pada ikan."
+            );
+        }
+
+        // Hapus hasil tangkapan sebelumnya
+        LastCaughtFish = null;
+        LastCaughtFishSize = 0f;
+
+        Debug.Log(
+            "Ikan menyambar: " +
+            fish.fishName +
+            " | Size: " +
+            CurrentFishSize.ToString("F2") +
+            "x"
+        );
     }
 
     public void CatchFish()
@@ -35,18 +66,33 @@ public class FishingState : MonoBehaviour
         if (CurrentFish == null)
             return;
 
-        LastCaughtFish = CurrentFish;
+        LastCaughtFish =
+            CurrentFish;
+
+        LastCaughtFishSize =
+            CurrentFishSize;
 
         Debug.Log(
             "Ikan berhasil ditangkap: " +
-            LastCaughtFish.fishName
+            LastCaughtFish.fishName +
+            " | Size: " +
+            LastCaughtFishSize.ToString("F2") +
+            "x"
         );
     }
 
     public void EndFishing()
     {
         IsFishing = false;
+
         CurrentFish = null;
         CurrentFishObject = null;
+        CurrentFishSize = 0f;
+    }
+
+    public static void ClearLastCaughtFish()
+    {
+        LastCaughtFish = null;
+        LastCaughtFishSize = 0f;
     }
 }

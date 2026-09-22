@@ -6,7 +6,7 @@ public class DepthSystem : MonoBehaviour
     public Transform seaHook;
 
     [Header("Depth Settings")]
-    public float maxDepth = 100f;
+    public float maxDepth;
 
     private Vector3 startPosition;
 
@@ -39,15 +39,9 @@ public class DepthSystem : MonoBehaviour
 
     private void CalculateDepth()
     {
-        float distance = Vector3.Distance(
-            startPosition,
-            seaHook.position
-        );
+        float distance = Vector3.Distance(startPosition, seaHook.position);
 
-        CurrentDepth = Mathf.Clamp(
-            distance,
-            0f,
-            maxDepth
+        CurrentDepth = Mathf.Clamp(distance, 0f, maxDepth
         );
     }
 
@@ -55,19 +49,13 @@ public class DepthSystem : MonoBehaviour
     {
         overrideDepth = true;
 
-        CurrentDepth = Mathf.Clamp(
-            depth,
-            0f,
-            maxDepth
-        );
+        CurrentDepth = Mathf.Clamp(depth, 0f, maxDepth);
     }
 
     public void ResumeFromCurrentPosition()
     {
         startPosition = seaHook.position;
-
         CurrentDepth = 0f;
-
         overrideDepth = false;
     }
 }
