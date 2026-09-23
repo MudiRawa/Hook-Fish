@@ -17,10 +17,10 @@ public class FishingState : MonoBehaviour
     // Ukuran aktual ikan terakhir
     public static float LastCaughtFishSize { get; private set; }
 
-    public void StartFishing(
-        FishData fish,
-        Transform fishObject
-    )
+    [Header("Catch VFX")]
+    public GameObject catchVFXPrefab;
+
+    public void StartFishing(FishData fish, Transform fishObject)
     {
         if (IsFishing)
             return;
@@ -30,7 +30,21 @@ public class FishingState : MonoBehaviour
         CurrentFish = fish;
         CurrentFishObject = fishObject;
 
-        // Ambil ukuran aktual dari ikan yang di-spawn
+        // =====================================================
+        // CATCH VFX
+        // =====================================================
+
+        if (catchVFXPrefab != null)
+        {
+            GameObject vfx = Instantiate(catchVFXPrefab, fishObject.position, Quaternion.identity);
+
+            Destroy(vfx, 2f);
+        }
+
+        // =====================================================
+        // AMBIL UKURAN IKAN
+        // =====================================================
+
         FishMovement fishMovement =
             fishObject.GetComponent<FishMovement>();
 
@@ -52,13 +66,7 @@ public class FishingState : MonoBehaviour
         LastCaughtFish = null;
         LastCaughtFishSize = 0f;
 
-        Debug.Log(
-            "Ikan menyambar: " +
-            fish.fishName +
-            " | Size: " +
-            CurrentFishSize.ToString("F2") +
-            "x"
-        );
+        Debug.Log("Ikan menyambar: " + fish.fishName + " | Size: " + CurrentFishSize.ToString("F2") + "x");
     }
 
     public void CatchFish()

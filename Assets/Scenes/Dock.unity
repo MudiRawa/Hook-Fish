@@ -689,18 +689,6 @@ MonoBehaviour:
   m_OnClick:
     m_PersistentCalls:
       m_Calls:
-      - m_Target: {fileID: 51671479}
-        m_TargetAssemblyTypeName: UnityEngine.GameObject, UnityEngine
-        m_MethodName: SetActive
-        m_Mode: 6
-        m_Arguments:
-          m_ObjectArgument: {fileID: 0}
-          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
-          m_IntArgument: 0
-          m_FloatArgument: 0
-          m_StringArgument: 
-          m_BoolArgument: 1
-        m_CallState: 2
       - m_Target: {fileID: 273970746}
         m_TargetAssemblyTypeName: UnityEngine.GameObject, UnityEngine
         m_MethodName: SetActive
@@ -818,6 +806,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::DockManager
   hook: {fileID: 1564055680}
+  startFishingButton: {fileID: 51671481}
   currentState: 0
 --- !u!4 &302984627
 Transform:
@@ -1805,6 +1794,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 782fa1f38e1dd1a42a7259e5bb0bb378, type: 3}
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::WaterDetector
+  waterSplashVFX: {fileID: 2962250222919615730, guid: 874da2025984a0142a164350a06a72dd, type: 3}
+  sceneLoadDelay: 0.5
 --- !u!1 &1156637436
 GameObject:
   m_ObjectHideFlags: 0
@@ -2560,7 +2551,7 @@ Transform:
   m_GameObject: {fileID: 1556371296}
   serializedVersion: 2
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: 0, y: -1.65, z: 10.85}
+  m_LocalPosition: {x: 0, y: -1.728, z: 10.85}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children: []
@@ -2805,18 +2796,6 @@ MonoBehaviour:
   m_OnClick:
     m_PersistentCalls:
       m_Calls:
-      - m_Target: {fileID: 51671479}
-        m_TargetAssemblyTypeName: UnityEngine.GameObject, UnityEngine
-        m_MethodName: SetActive
-        m_Mode: 6
-        m_Arguments:
-          m_ObjectArgument: {fileID: 0}
-          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
-          m_IntArgument: 0
-          m_FloatArgument: 0
-          m_StringArgument: 
-          m_BoolArgument: 0
-        m_CallState: 2
       - m_Target: {fileID: 1611163907}
         m_TargetAssemblyTypeName: UnityEngine.GameObject, UnityEngine
         m_MethodName: SetActive

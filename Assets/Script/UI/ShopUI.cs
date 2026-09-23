@@ -23,11 +23,9 @@ public class ShopUI : MonoBehaviour
 
     private void CheckCaughtFish()
     {
-        FishData fish =
-            FishingState.LastCaughtFish;
+        FishData fish = FishingState.LastCaughtFish;
 
-        bool hasFish =
-            fish != null;
+        bool hasFish = fish != null;
 
         sellButton.SetActive(hasFish);
         priceButton.SetActive(hasFish);
@@ -108,6 +106,12 @@ public class ShopUI : MonoBehaviour
         // Hapus data tangkapan terlebih dahulu
         // supaya ikan tidak bisa dijual berulang kali.
         FishingState.ClearLastCaughtFish();
+
+        DockManager dockManager = FindAnyObjectByType<DockManager>();
+        if (dockManager != null)
+        {
+            dockManager.UpdateFishingButton();
+        }
 
         // Tambahkan coin
         CoinManager.Instance.AddCoin(
