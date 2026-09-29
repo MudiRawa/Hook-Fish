@@ -20,35 +20,23 @@ public class WaterDetector : MonoBehaviour
 
         hasEnteredWater = true;
 
-        PlayWaterSplash(other.transform.position);
+        PlayWaterSplash(other.transform.position + Vector3.up * 0.35f);
 
-        StartCoroutine(
-            LoadSeaScene()
-        );
+        StartCoroutine(LoadSeaScene());
     }
 
     private void PlayWaterSplash(Vector3 position)
     {
         if (waterSplashVFX == null)
         {
-            Debug.LogWarning(
-                "Water Splash VFX belum diisi."
-            );
+            Debug.LogWarning("Water Splash VFX belum diisi.");
 
             return;
         }
 
-        GameObject vfx =
-            Instantiate(
-                waterSplashVFX,
-                position,
-                Quaternion.identity
-            );
+        GameObject vfx = Instantiate(waterSplashVFX, position, Quaternion.identity);
 
-        Destroy(
-            vfx,
-            sceneLoadDelay
-        );
+        Destroy(vfx, sceneLoadDelay);
     }
 
     private IEnumerator LoadSeaScene()
