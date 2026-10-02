@@ -1698,7 +1698,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::DepthSystem
   seaHook: {fileID: 107113639}
-  maxDepth: 10
+  maxDepth: 50
 --- !u!114 &776932500
 MonoBehaviour:
   m_ObjectHideFlags: 0
