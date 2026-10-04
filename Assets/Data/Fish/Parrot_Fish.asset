@@ -13,9 +13,10 @@ MonoBehaviour:
   m_Name: Parrot_Fish
   m_EditorClassIdentifier: Assembly-CSharp::FishData
   fishName: Parrot Fish
-  description: Iwak ta kont iki
-  fishPrefab: {fileID: 0}
+  description: Parrot Fish
+  fishPrefab: {fileID: 3821462079908814525, guid: 5bfba5b00b9361a4ebd659236b6e2562, type: 3}
   rarity: 0
-  minDepth: 0
-  maxDepth: 100
-  fightDuration: 5
+  minWeight: 0.2
+  maxWeight: 1
+  sellPrice: 50
+  fightStrength: 10

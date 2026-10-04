@@ -18,7 +18,7 @@ public class DepthUI : MonoBehaviour
         }
 
         depthSlider.minValue = 0f;
-        depthSlider.maxValue = depthSystem.maxDepth;
+        // depthSlider.maxValue = depthSystem.maxDepth;
         depthSlider.value = depthSystem.CurrentDepth;
     }
 
@@ -29,7 +29,6 @@ public class DepthUI : MonoBehaviour
 
         depthSlider.value = depthSystem.CurrentDepth;
 
-        depthText.text =
-            depthSystem.CurrentDepth.ToString("F1") + " m";
+        depthText.text = depthSystem.CurrentDepth.ToString("F1") + " m";
     }
 }

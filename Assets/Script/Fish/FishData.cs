@@ -27,6 +27,14 @@ public class FishData : ScriptableObject
     [Header("Rarity")]
     public FishRarity rarity;
 
-    [Header("Fishing")]
+    [Header("Size")]
+    public float minSizeMultiplier = 0.5f;
+    public float maxSizeMultiplier = 1.5f;
+
+    [Header("Sell")]
+    public int basePrice = 20;
+
+    [Header("Fight")]
+    [Range(1f, 100f)]
     public float fightStrength = 1f;
 }
