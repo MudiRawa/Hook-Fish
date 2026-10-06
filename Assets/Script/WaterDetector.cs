@@ -34,7 +34,7 @@ public class WaterDetector : MonoBehaviour
             return;
         }
 
-        GameObject vfx = Instantiate(waterSplashVFX, position, Quaternion.identity);
+        GameObject vfx = Instantiate(waterSplashVFX, position, Quaternion.Euler(-90f, 0f, 0f));
 
         Destroy(vfx, sceneLoadDelay);
     }
