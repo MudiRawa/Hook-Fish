@@ -32,6 +32,11 @@ public class FishingMinigame : MonoBehaviour
     public float pullDepthSpeed = 1f;
     public float escapeDepthSpeed = 1f;
 
+    [Header("Audio")]
+    public AudioSource musicSource;
+    public AudioClip startFishingClip;
+    public AudioSource sfxSource;
+
     // =========================================================
     // INTERNAL VARIABLES
     // =========================================================
@@ -204,6 +209,17 @@ public class FishingMinigame : MonoBehaviour
 
         bool isHolding =
             Mouse.current.leftButton.isPressed;
+
+        // ===== REEL SFX LOGIC =====
+        if (isHolding)
+        {
+            AudioManager.Instance.PlayReelLoopingSFX(1);  // Reel Pulling
+        }
+        else
+        {
+            AudioManager.Instance.PlayReelLoopingSFX(2);  // Reel Losing
+        }
+        // =========================
 
         float inputDirection =
             isHolding ? 1f : -1f;
@@ -856,6 +872,12 @@ public class FishingMinigame : MonoBehaviour
             Destroy(fishingState.CurrentFishObject.gameObject);
         }
 
+        // Play catch SFX
+        AudioManager.Instance.PlaySFX(2);
+
+        // Fade out reel SFX
+        AudioManager.Instance.FadeOutReelLoopingSFX(0.5f);
+
         fishingState.EndFishing();
 
         depthSystem.ResumeFromCurrentPosition();
@@ -864,6 +886,8 @@ public class FishingMinigame : MonoBehaviour
         minigameStarted = false;
         fightStarted = false;
         finishing = false;
+
+        AudioManager.Instance.StopBGM();
 
         SceneManager.LoadScene("Dock");
     }

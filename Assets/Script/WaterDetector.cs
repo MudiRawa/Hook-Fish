@@ -21,7 +21,8 @@ public class WaterDetector : MonoBehaviour
         hasEnteredWater = true;
 
         PlayWaterSplash(other.transform.position + Vector3.up * 0.35f);
-
+        AudioManager.Instance.PlaySFX(1);
+        AudioManager.Instance.PlayBGM(1);
         StartCoroutine(LoadSeaScene());
     }
 
