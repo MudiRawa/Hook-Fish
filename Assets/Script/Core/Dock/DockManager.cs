@@ -1,5 +1,7 @@
+using System.Collections;
 using UnityEngine;
 using UnityEngine.UI;
+using UnityEngine.SceneManagement;
 
 public enum DockState
 {
@@ -40,6 +42,7 @@ public class DockManager : MonoBehaviour
         Debug.Log("Fishing started!");
 
         hook.ThrowHook();
+        StartCoroutine(WaitForSeconds(2.5f));
     }
 
     public void OpenShop()
@@ -75,5 +78,11 @@ public class DockManager : MonoBehaviour
         startFishingButton.gameObject.SetActive(
             canFish
         );
+    }
+
+    private IEnumerator WaitForSeconds(float seconds)
+    {
+        yield return new WaitForSeconds(seconds);
+        SceneManager.LoadScene("Sea");
     }
 }
