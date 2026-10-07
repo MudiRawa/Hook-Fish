@@ -189,7 +189,7 @@ public class FishingMinigame : MonoBehaviour
         fishObject.localPosition =
             Vector3.zero;
 
-        fishObject.localRotation = Quaternion.Euler(0f, 180f, 0f);
+        fishObject.localRotation = Quaternion.Euler(0f, 0f, -90f);
 
         Collider fishCollider = fishObject.GetComponent<Collider>();
 

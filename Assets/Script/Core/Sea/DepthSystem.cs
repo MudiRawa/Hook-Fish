@@ -41,8 +41,7 @@ public class DepthSystem : MonoBehaviour
     {
         float distance = Vector3.Distance(startPosition, seaHook.position);
 
-        CurrentDepth = Mathf.Clamp(distance, 0f, maxDepth
-        );
+        CurrentDepth = Mathf.Clamp(distance, 0f, maxDepth);
     }
 
     public void SetDepthOverride(float depth)

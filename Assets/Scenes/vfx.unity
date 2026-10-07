@@ -325,6 +325,10 @@ PrefabInstance:
       propertyPath: m_Name
       value: dapet ikan
       objectReference: {fileID: 0}
+    - target: {fileID: 4403048263558111202, guid: 235e9d98774b72149aa2beb51e10bbe2, type: 3}
+      propertyPath: m_IsActive
+      value: 0
+      objectReference: {fileID: 0}
     - target: {fileID: 8152146826805806362, guid: 235e9d98774b72149aa2beb51e10bbe2, type: 3}
       propertyPath: m_LocalPosition.x
       value: 0
@@ -508,6 +512,10 @@ PrefabInstance:
     - target: {fileID: 637846166802348565, guid: 73031d1fde82fd14a963e6c94a60ba0a, type: 3}
       propertyPath: m_Name
       value: cepokcepok
+      objectReference: {fileID: 0}
+    - target: {fileID: 637846166802348565, guid: 73031d1fde82fd14a963e6c94a60ba0a, type: 3}
+      propertyPath: m_IsActive
+      value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 6647253285028533536, guid: 73031d1fde82fd14a963e6c94a60ba0a, type: 3}
       propertyPath: m_LocalPosition.x

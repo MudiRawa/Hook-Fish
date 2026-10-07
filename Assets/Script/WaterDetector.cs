@@ -36,6 +36,7 @@ public class WaterDetector : MonoBehaviour
         }
 
         GameObject vfx = Instantiate(waterSplashVFX, position, Quaternion.Euler(-90f, 0f, 0f));
+        vfx.transform.localPosition = new Vector3(0f, -1.57f, 10.85f);
 
         Destroy(vfx, sceneLoadDelay);
     }

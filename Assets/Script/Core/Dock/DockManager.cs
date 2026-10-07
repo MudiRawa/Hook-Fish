@@ -42,7 +42,7 @@ public class DockManager : MonoBehaviour
         Debug.Log("Fishing started!");
 
         hook.ThrowHook();
-        StartCoroutine(WaitForSeconds(2.5f));
+        // StartCoroutine(WaitForSeconds(2.5f));
     }
 
     public void OpenShop()

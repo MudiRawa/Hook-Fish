@@ -26,12 +26,6 @@ public class FishingState : MonoBehaviour
         // CATCH VFX
         // =====================================================
 
-        if (catchVFXPrefab != null)
-        {
-            GameObject vfx = Instantiate(catchVFXPrefab, fishObject.position, Quaternion.identity);
-
-            Destroy(vfx, 2f);
-        }
 
         if(fishTrailPrefab != null)
         {
@@ -39,9 +33,15 @@ public class FishingState : MonoBehaviour
             trail.transform.SetParent(fishObject);
             trail.transform.localRotation = Quaternion.Euler(0f, 180f, 0f);
             trail.transform.localScale = new Vector3 (0.3f, 0.3f, 0.3f);
-            trail.transform.localPosition = new Vector3(0f, 0f, 0.22f);
+            trail.transform.localPosition = new Vector3(0f, 0f, 0f);
         }
 
+        if (catchVFXPrefab != null)
+        {
+            GameObject vfx = Instantiate(catchVFXPrefab, fishObject.position, Quaternion.identity);
+
+            Destroy(vfx, 2f);
+        }
         // =====================================================
         // AMBIL UKURAN IKAN
         // =====================================================
