@@ -29,8 +29,8 @@ public class FishingMinigame : MonoBehaviour
     public float successMessageTime = 1f;
 
     [Header("Fight Depth")]
-    public float pullDepthSpeed = 1f;
-    public float escapeDepthSpeed = 1f;
+    public float pullDepthSpeed = 1.5f;
+    public float escapeDepthSpeed = 1.5f;
 
     [Header("Audio")]
     public AudioSource musicSource;
@@ -762,16 +762,12 @@ public class FishingMinigame : MonoBehaviour
         if (fishInsideZone)
         {
             // Menarik kail ke atas dengan kecepatan 1
-            fightDepth -=
-                pullDepthSpeed *
-                Time.deltaTime;
+            fightDepth -= pullDepthSpeed * Time.deltaTime;
         }
         else
         {
             // Ikan menarik kail ke bawah dengan kecepatan 1
-            fightDepth +=
-                escapeDepthSpeed *
-                Time.deltaTime;
+            fightDepth += escapeDepthSpeed * Time.deltaTime;
         }
 
         fightDepth =
@@ -787,6 +783,9 @@ public class FishingMinigame : MonoBehaviour
             maxDepthReached = true;
             Debug.Log("Kalah mancing");
             SceneManager.LoadScene("Dock");
+            AudioManager.Instance.StopLoopingSFX();
+            AudioManager.Instance.StopBGM();
+            AudioManager.Instance.StopSFX();
         }
 
         // Kalau sudah tidak berada di max depth,
