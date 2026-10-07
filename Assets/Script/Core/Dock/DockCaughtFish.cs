@@ -37,24 +37,17 @@ public class DockCaughtFish : MonoBehaviour
         }
 
         // Spawn ikan di tangan
-        currentFishObject =
-            Instantiate(
-                caughtFish.fishPrefab,
-                fishHoldPoint
-            );
+        currentFishObject = Instantiate(caughtFish.fishPrefab, fishHoldPoint);
 
-        currentFishObject.transform.localPosition =
-            Vector3.zero;
+        currentFishObject.transform.localPosition = Vector3.zero;
 
-        currentFishObject.transform.localRotation =
-            Quaternion.Euler(-70f, 0f, 0f);
+        currentFishObject.transform.localRotation = Quaternion.Euler(-70f, 0f, 0f);
 
         // =====================================================
         // PAKAI UKURAN IKAN YANG SAMA DENGAN HASIL TANGKAPAN
         // =====================================================
 
-        float sizeMultiplier =
-            FishingState.LastCaughtFishSize;
+        float sizeMultiplier = FishingState.LastCaughtFishSize / 2f;
 
         currentFishObject.transform.localScale =
             caughtFish.fishPrefab.transform.localScale *
