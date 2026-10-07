@@ -14,8 +14,7 @@ public class DockCaughtFish : MonoBehaviour
 
     private void ShowCaughtFish()
     {
-        FishData caughtFish =
-            FishingState.LastCaughtFish;
+        FishData caughtFish = FishingState.LastCaughtFish;
 
         if (caughtFish == null)
         {

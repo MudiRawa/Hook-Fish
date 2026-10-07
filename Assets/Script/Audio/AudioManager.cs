@@ -326,6 +326,15 @@ public class AudioManager : MonoBehaviour
         StartCoroutine(FadeOutReelCoroutine(duration));
     }
 
+
+    public void StopAllSounds()
+    {
+        StopBGM();
+        StopSFX();
+        StopLoopingSFX();
+        StopReelLoopingSFX();
+    }
+
     private System.Collections.IEnumerator FadeOutReelCoroutine(float duration)
     {
         float elapsed = 0f;

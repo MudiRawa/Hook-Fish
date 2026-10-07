@@ -184,18 +184,19 @@ public class FishingMinigame : MonoBehaviour
         }
 
         fishObject.SetParent(seaHook);
+        AudioManager.Instance.PlayLoopingSFX(0);
 
         fishObject.localPosition =
             Vector3.zero;
 
-        fishObject.localRotation =
-            Quaternion.identity;
+        fishObject.localRotation = Quaternion.Euler(0f, 180f, 0f);
 
-        Collider fishCollider =
-            fishObject.GetComponent<Collider>();
+        Collider fishCollider = fishObject.GetComponent<Collider>();
 
-        if (fishCollider != null)
+        if (fishCollider != null) 
+        {
             fishCollider.enabled = false;
+        }
     }
 
     // =========================================================
@@ -209,17 +210,6 @@ public class FishingMinigame : MonoBehaviour
 
         bool isHolding =
             Mouse.current.leftButton.isPressed;
-
-        // ===== REEL SFX LOGIC =====
-        if (isHolding)
-        {
-            AudioManager.Instance.PlayReelLoopingSFX(1);  // Reel Pulling
-        }
-        else
-        {
-            AudioManager.Instance.PlayReelLoopingSFX(2);  // Reel Losing
-        }
-        // =========================
 
         float inputDirection =
             isHolding ? 1f : -1f;
@@ -756,6 +746,8 @@ public class FishingMinigame : MonoBehaviour
             fightDepth -=
                 pullDepthSpeed *
                 Time.deltaTime;
+            
+            AudioManager.Instance.PlayReelLoopingSFX(1);
         }
         else
         {
@@ -763,6 +755,8 @@ public class FishingMinigame : MonoBehaviour
             fightDepth +=
                 escapeDepthSpeed *
                 Time.deltaTime;
+
+            AudioManager.Instance.PlayReelLoopingSFX(2);
         }
 
         fightDepth =
@@ -877,6 +871,7 @@ public class FishingMinigame : MonoBehaviour
 
         // Fade out reel SFX
         AudioManager.Instance.FadeOutReelLoopingSFX(0.5f);
+        AudioManager.Instance.StopLoopingSFX();
 
         fishingState.EndFishing();
 

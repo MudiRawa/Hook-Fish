@@ -27,8 +27,7 @@ public class FishSpawner : MonoBehaviour
     {
         RemoveDestroyedFish();
 
-        spawnTimer -=
-            Time.deltaTime;
+        spawnTimer -= Time.deltaTime;
 
         if (spawnTimer <= 0f)
         {
@@ -37,8 +36,7 @@ public class FishSpawner : MonoBehaviour
                 SpawnFish();
             }
 
-            spawnTimer =
-                spawnInterval;
+            spawnTimer = spawnInterval;
         }
     }
 
@@ -49,18 +47,14 @@ public class FishSpawner : MonoBehaviour
             fishList.Count == 0
         )
         {
-            Debug.LogWarning(
-                "FishSpawner: Fish List masih kosong."
-            );
+            Debug.LogWarning("FishSpawner: Fish List masih kosong.");
 
             return;
         }
 
         if (spawnArea == null)
         {
-            Debug.LogWarning(
-                "FishSpawner: Spawn Area belum diisi."
-            );
+            Debug.LogWarning("FishSpawner: Spawn Area belum diisi.");
 
             return;
         }
@@ -95,8 +89,7 @@ public class FishSpawner : MonoBehaviour
         }
 
         // Random posisi dalam area
-        Bounds bounds =
-            spawnArea.bounds;
+        Bounds bounds = spawnArea.bounds;
 
         Vector3 spawnPosition =
             new Vector3(
@@ -136,31 +129,20 @@ public class FishSpawner : MonoBehaviour
         spawnedFish.Add(fish);
 
         // Setup FishMovement
-        FishMovement fishMovement =
-            fish.GetComponent<FishMovement>();
+        FishMovement fishMovement = fish.GetComponent<FishMovement>();
 
         if (fishMovement != null)
         {
-            fishMovement.SetMovementArea(
-                spawnArea
-            );
+            fishMovement.SetMovementArea(spawnArea);
 
-            fishMovement.SetFishData(
-                fishData
-            );
+            fishMovement.SetFishData(fishData);
         }
         else
         {
-            Debug.LogWarning(
-                fishData.fishName +
-                " tidak memiliki FishMovement."
-            );
+            Debug.LogWarning(fishData.fishName + " tidak memiliki FishMovement.");
         }
 
-        Debug.Log(
-            "Spawn ikan: " +
-            fishData.fishName
-        );
+        Debug.Log("Spawn ikan: " + fishData.fishName);
     }
 
     private void RemoveDestroyedFish()

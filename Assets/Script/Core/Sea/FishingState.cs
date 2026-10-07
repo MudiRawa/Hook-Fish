@@ -3,22 +3,14 @@ using UnityEngine;
 public class FishingState : MonoBehaviour
 {
     public bool IsFishing { get; private set; }
-
     public FishData CurrentFish { get; private set; }
-
     public Transform CurrentFishObject { get; private set; }
-
-    // Ukuran aktual ikan yang sedang dipancing
     public float CurrentFishSize { get; private set; }
-
-    // Ikan terakhir yang berhasil ditangkap
     public static FishData LastCaughtFish { get; private set; }
-
-    // Ukuran aktual ikan terakhir
     public static float LastCaughtFishSize { get; private set; }
-
     [Header("Catch VFX")]
     public GameObject catchVFXPrefab;
+    public GameObject fishTrailPrefab;
 
     public void StartFishing(FishData fish, Transform fishObject)
     {
@@ -39,6 +31,15 @@ public class FishingState : MonoBehaviour
             GameObject vfx = Instantiate(catchVFXPrefab, fishObject.position, Quaternion.identity);
 
             Destroy(vfx, 2f);
+        }
+
+        if(fishTrailPrefab != null)
+        {
+            GameObject trail = Instantiate(fishTrailPrefab, fishObject.position, Quaternion.Euler(0f, 0f, 0f));
+            trail.transform.SetParent(fishObject);
+            trail.transform.localRotation = Quaternion.Euler(0f, 180f, 0f);
+            trail.transform.localScale = new Vector3 (0.3f, 0.3f, 0.3f);
+            trail.transform.localPosition = new Vector3(0f, 0f, 0.22f);
         }
 
         // =====================================================
