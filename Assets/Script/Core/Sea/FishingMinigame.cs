@@ -1,4 +1,4 @@
-using System.Collections;
+﻿using System.Collections;
 using UnityEngine;
 using UnityEngine.InputSystem;
 using UnityEngine.SceneManagement;
@@ -73,6 +73,14 @@ public class FishingMinigame : MonoBehaviour
     {
         fishingPanel.SetActive(false);
         maxDepthReached = false;
+
+        // Stop BGM Dock saat enter FishingMinigame scene
+        AudioManager.Instance.FadeOutBGM(1f);
+
+        // Play Water Flow ambient (index 0 di loopingSfxClips untuk scene ini)
+        AudioManager.Instance.PlayLoopingSFX(0);
+
+        Debug.Log("🌊 FishingMinigame Started - BGM faded out, Water Flow playing");
     }
 
     private void Update()
@@ -184,7 +192,6 @@ public class FishingMinigame : MonoBehaviour
         }
 
         fishObject.SetParent(seaHook);
-        AudioManager.Instance.PlayLoopingSFX(0);
 
         fishObject.localPosition =
             Vector3.zero;
@@ -193,7 +200,7 @@ public class FishingMinigame : MonoBehaviour
 
         Collider fishCollider = fishObject.GetComponent<Collider>();
 
-        if (fishCollider != null) 
+        if (fishCollider != null)
         {
             fishCollider.enabled = false;
         }
@@ -213,6 +220,18 @@ public class FishingMinigame : MonoBehaviour
 
         float inputDirection =
             isHolding ? 1f : -1f;
+
+        // =====================================================
+        // REEL SFX LOGIC
+        // =====================================================
+        if (isHolding)
+        {
+            AudioManager.Instance.PlayReelLoopingSFX(1);  // Reel Pulling
+        }
+        else
+        {
+            AudioManager.Instance.PlayReelLoopingSFX(2);  // Reel Losing
+        }
 
         // =====================================================
         // SAAT KLIK DITAHAN
@@ -746,8 +765,6 @@ public class FishingMinigame : MonoBehaviour
             fightDepth -=
                 pullDepthSpeed *
                 Time.deltaTime;
-            
-            AudioManager.Instance.PlayReelLoopingSFX(1);
         }
         else
         {
@@ -755,8 +772,6 @@ public class FishingMinigame : MonoBehaviour
             fightDepth +=
                 escapeDepthSpeed *
                 Time.deltaTime;
-
-            AudioManager.Instance.PlayReelLoopingSFX(2);
         }
 
         fightDepth =
@@ -869,9 +884,17 @@ public class FishingMinigame : MonoBehaviour
         // Play catch SFX
         AudioManager.Instance.PlaySFX(2);
 
+        // Tunggu SFX jalan + fade out
+        yield return new WaitForSeconds(0.3f);
+
+        // Fade out water flow (looping sfx 0)
+        AudioManager.Instance.FadeOutLoopingSFX(0.5f);
+
         // Fade out reel SFX
-        AudioManager.Instance.FadeOutReelLoopingSFX(0.5f);
-        AudioManager.Instance.StopLoopingSFX();
+        AudioManager.Instance.FadeOutReelLoopingSFX(0.3f);
+
+        // Tunggu fade selesai sebelum scene load
+        yield return new WaitForSeconds(0.6f);
 
         fishingState.EndFishing();
 

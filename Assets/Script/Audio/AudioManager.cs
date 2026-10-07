@@ -1,5 +1,5 @@
-﻿using UnityEngine;
-using System.Collections;
+﻿using System.Collections;
+using UnityEngine;
 
 public class AudioManager : MonoBehaviour
 {
@@ -21,11 +21,11 @@ public class AudioManager : MonoBehaviour
     [SerializeField] private AudioClipInfo[] sfxClips;
     [SerializeField] private AudioClipInfo[] loopingSfxClips;
 
-    private int currentReelSfx = -1;  // Track which reel sfx is playing
-
     [SerializeField] private float bgmVolume = 0.7f;
     [SerializeField] private float sfxVolume = 0.8f;
     [SerializeField] private float loopingSfxVolume = 0.6f;
+
+    private int currentReelSfx = -1;  // Track which reel sfx is playing
 
     private void Awake()
     {
@@ -69,7 +69,6 @@ public class AudioManager : MonoBehaviour
 
     // ===== BGM Functions =====
 
-    /// <summary>Putar BGM berdasarkan nama atau index</summary>
     public void PlayBGM(string clipName)
     {
         AudioClip clip = GetAudioClip(bgmClips, clipName);
@@ -90,6 +89,7 @@ public class AudioManager : MonoBehaviour
         {
             bgmSource.clip = bgmClips[index].clip;
             bgmSource.Play();
+            Debug.Log($"▶️ BGM [{index}]: {bgmClips[index].name}");
         }
         else
         {
@@ -119,6 +119,7 @@ public class AudioManager : MonoBehaviour
     public void FadeOutBGM(float duration = 1f)
     {
         StartCoroutine(FadeAudio(bgmSource, bgmVolume, 0f, duration));
+        Debug.Log($"🔉 BGM fade out ({duration}s)");
     }
 
     /// <summary>Fade in BGM</summary>
@@ -126,6 +127,7 @@ public class AudioManager : MonoBehaviour
     {
         bgmSource.volume = 0f;
         StartCoroutine(FadeAudio(bgmSource, 0f, bgmVolume, duration));
+        Debug.Log($"🔊 BGM fade in ({duration}s)");
     }
 
     // ===== SFX Functions =====
@@ -149,6 +151,7 @@ public class AudioManager : MonoBehaviour
         if (index >= 0 && index < sfxClips.Length)
         {
             sfxSource.PlayOneShot(sfxClips[index].clip, sfxVolume);
+            Debug.Log($"▶️ SFX [{index}]: {sfxClips[index].name}");
         }
         else
         {
@@ -162,36 +165,8 @@ public class AudioManager : MonoBehaviour
         sfxSource.Stop();
     }
 
-    // ===== Volume Control =====
-
-    public void SetBGMVolume(float volume)
-    {
-        bgmVolume = Mathf.Clamp01(volume);
-        bgmSource.volume = bgmVolume;
-    }
-
-    public void SetSFXVolume(float volume)
-    {
-        sfxVolume = Mathf.Clamp01(volume);
-        sfxSource.volume = sfxVolume;
-    }
-
-    public float GetBGMVolume() => bgmVolume;
-    public float GetSFXVolume() => sfxVolume;
-
-    public void MuteBGM(bool mute)
-    {
-        bgmSource.mute = mute;
-    }
-
-    public void MuteSFX(bool mute)
-    {
-        sfxSource.mute = mute;
-    }
-
     // ===== LOOPING SFX Functions =====
 
-    /// <summary>Putar Looping SFX berdasarkan index</summary>
     public void PlayLoopingSFX(int index)
     {
         if (index >= 0 && index < loopingSfxClips.Length)
@@ -207,7 +182,6 @@ public class AudioManager : MonoBehaviour
         }
     }
 
-    /// <summary>Putar Looping SFX berdasarkan nama</summary>
     public void PlayLoopingSFX(string clipName)
     {
         AudioClip clip = GetAudioClip(loopingSfxClips, clipName);
@@ -224,21 +198,18 @@ public class AudioManager : MonoBehaviour
         }
     }
 
-    /// <summary>Stop Looping SFX</summary>
     public void StopLoopingSFX()
     {
         loopingSfxSource.Stop();
         Debug.Log("⏹️ Looping SFX stopped");
     }
 
-    /// <summary>Fade out Looping SFX</summary>
     public void FadeOutLoopingSFX(float duration = 1f)
     {
         StartCoroutine(FadeAudio(loopingSfxSource, loopingSfxVolume, 0f, duration));
         Debug.Log($"🔉 Looping SFX fade out ({duration}s)");
     }
 
-    /// <summary>Fade in Looping SFX</summary>
     public void FadeInLoopingSFX(float duration = 1f)
     {
         loopingSfxSource.volume = 0f;
@@ -246,7 +217,6 @@ public class AudioManager : MonoBehaviour
         Debug.Log($"🔊 Looping SFX fade in ({duration}s)");
     }
 
-    /// <summary>Set Looping SFX Volume</summary>
     public void SetLoopingSFXVolume(float volume)
     {
         loopingSfxVolume = Mathf.Clamp01(volume);
@@ -254,37 +224,11 @@ public class AudioManager : MonoBehaviour
         Debug.Log($"🔊 Looping SFX volume: {volume}");
     }
 
-    /// <summary>Get Looping SFX Volume</summary>
     public float GetLoopingSFXVolume() => loopingSfxVolume;
 
-    /// <summary>Mute/Unmute Looping SFX</summary>
     public void MuteLoopingSFX(bool mute)
     {
         loopingSfxSource.mute = mute;
-    }
-
-    // ===== Helper Functions =====
-
-    private AudioClip GetAudioClip(AudioClipInfo[] clips, string name)
-    {
-        foreach (var clip in clips)
-        {
-            if (clip.name == name)
-                return clip.clip;
-        }
-        return null;
-    }
-
-    private System.Collections.IEnumerator FadeAudio(AudioSource source, float startVolume, float endVolume, float duration)
-    {
-        float elapsed = 0f;
-        while (elapsed < duration)
-        {
-            elapsed += Time.deltaTime;
-            source.volume = Mathf.Lerp(startVolume, endVolume, elapsed / duration);
-            yield return null;
-        }
-        source.volume = endVolume;
     }
 
     // ===== REEL LOOPING SFX Functions =====
@@ -326,16 +270,7 @@ public class AudioManager : MonoBehaviour
         StartCoroutine(FadeOutReelCoroutine(duration));
     }
 
-
-    public void StopAllSounds()
-    {
-        StopBGM();
-        StopSFX();
-        StopLoopingSFX();
-        StopReelLoopingSFX();
-    }
-
-    private System.Collections.IEnumerator FadeOutReelCoroutine(float duration)
+    private IEnumerator FadeOutReelCoroutine(float duration)
     {
         float elapsed = 0f;
         float startVolume = loopingSfxSource2.volume;
@@ -351,5 +286,56 @@ public class AudioManager : MonoBehaviour
         loopingSfxSource2.Stop();
         loopingSfxSource2.volume = 0.5f;
         Debug.Log($"🔉 Reel SFX fade out ({duration}s)");
+    }
+
+    // ===== Volume Control =====
+
+    public void SetBGMVolume(float volume)
+    {
+        bgmVolume = Mathf.Clamp01(volume);
+        bgmSource.volume = bgmVolume;
+    }
+
+    public void SetSFXVolume(float volume)
+    {
+        sfxVolume = Mathf.Clamp01(volume);
+        sfxSource.volume = sfxVolume;
+    }
+
+    public float GetBGMVolume() => bgmVolume;
+    public float GetSFXVolume() => sfxVolume;
+
+    public void MuteBGM(bool mute)
+    {
+        bgmSource.mute = mute;
+    }
+
+    public void MuteSFX(bool mute)
+    {
+        sfxSource.mute = mute;
+    }
+
+    // ===== Helper Functions =====
+
+    private AudioClip GetAudioClip(AudioClipInfo[] clips, string name)
+    {
+        foreach (var clip in clips)
+        {
+            if (clip.name == name)
+                return clip.clip;
+        }
+        return null;
+    }
+
+    private System.Collections.IEnumerator FadeAudio(AudioSource source, float startVolume, float endVolume, float duration)
+    {
+        float elapsed = 0f;
+        while (elapsed < duration)
+        {
+            elapsed += Time.deltaTime;
+            source.volume = Mathf.Lerp(startVolume, endVolume, elapsed / duration);
+            yield return null;
+        }
+        source.volume = endVolume;
     }
 }

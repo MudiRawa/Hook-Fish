@@ -1,4 +1,4 @@
-using System.Collections;
+﻿using System.Collections;
 using UnityEngine;
 using UnityEngine.UI;
 using UnityEngine.SceneManagement;
@@ -20,6 +20,14 @@ public class DockManager : MonoBehaviour
 
     private void Start()
     {
+        // Reset BGM volume ke normal (dari fade out sebelumnya)
+        AudioManager.Instance.SetBGMVolume(0.7f);
+
+        // Play Dock BGM saat scene mulai
+        AudioManager.Instance.PlayBGM(0);  // BGM Dock index 0
+
+        Debug.Log("🎵 Dock BGM playing");
+
         UpdateFishingButton();
     }
 

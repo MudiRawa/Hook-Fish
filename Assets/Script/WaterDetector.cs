@@ -1,4 +1,4 @@
-using System.Collections;
+﻿using System.Collections;
 using UnityEngine;
 using UnityEngine.SceneManagement;
 
@@ -21,8 +21,18 @@ public class WaterDetector : MonoBehaviour
         hasEnteredWater = true;
 
         PlayWaterSplash(other.transform.position + Vector3.up * 0.35f);
+
+        // Fade out BGM Dock (index 0)
+        AudioManager.Instance.FadeOutBGM(1f);
+
+        // Play splash SFX
         AudioManager.Instance.PlaySFX(1);
+
+        // Play BGM ambient air (index 1)
         AudioManager.Instance.PlayBGM(1);
+
+        Debug.Log("💧 Kail masuk air - BGM Dock fade out, BGM Air playing");
+
         StartCoroutine(LoadSeaScene());
     }
 
