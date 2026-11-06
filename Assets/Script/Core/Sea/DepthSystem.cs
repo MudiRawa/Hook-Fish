@@ -6,24 +6,39 @@ public class DepthSystem : MonoBehaviour
     public Transform seaHook;
 
     [Header("Depth Settings")]
-    public float maxDepth;
+    public float maxDepth = 20f;
 
     private Vector3 startPosition;
-
     private bool overrideDepth;
 
     public float CurrentDepth { get; private set; }
+
     public Vector3 StartPosition => startPosition;
 
     private void Start()
     {
         if (seaHook == null)
         {
-            Debug.LogError("SeaHook belum diisi pada DepthSystem.");
+            Debug.LogError(
+                "SeaHook belum diisi pada DepthSystem."
+            );
+
             return;
         }
 
         startPosition = seaHook.position;
+
+        // Ambil max depth sesuai level pancingan
+        if (RodUpgradeManager.Instance != null)
+        {
+            maxDepth =
+                RodUpgradeManager.Instance.CurrentMaxDepth;
+        }
+
+        Debug.Log(
+            "Max Depth saat ini: " +
+            maxDepth + " m"
+        );
     }
 
     private void Update()
@@ -39,16 +54,30 @@ public class DepthSystem : MonoBehaviour
 
     private void CalculateDepth()
     {
-        float distance = Vector3.Distance(startPosition, seaHook.position);
+        float distance =
+            Vector3.Distance(
+                startPosition,
+                seaHook.position
+            );
 
-        CurrentDepth = Mathf.Clamp(distance, 0f, maxDepth);
+        CurrentDepth =
+            Mathf.Clamp(
+                distance,
+                0f,
+                maxDepth
+            );
     }
 
     public void SetDepthOverride(float depth)
     {
         overrideDepth = true;
 
-        CurrentDepth = Mathf.Clamp(depth, 0f, maxDepth);
+        CurrentDepth =
+            Mathf.Clamp(
+                depth,
+                0f,
+                maxDepth
+            );
     }
 
     public void ResumeFromCurrentPosition()

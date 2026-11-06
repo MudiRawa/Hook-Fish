@@ -15,6 +15,6 @@ public class CoinUI : MonoBehaviour
         if (coinText == null)
             return;
 
-        coinText.text = CoinManager.Instance.Coin.ToString();
+        coinText.text = "Coin: " + CoinManager.Instance.Coin.ToString();
     }
 }
